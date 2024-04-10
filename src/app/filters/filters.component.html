@@ -1,0 +1,292 @@
+Filters Example 1 - applies filters when user clicks on the Apply Filters
+button:
+
+<form>
+  <mat-form-field>
+    <mat-label>Region</mat-label>
+    <mat-select [formControl]="region" multiple>
+      <mat-option *ngFor="let region of regionData" [value]="region">{{
+        region[0].qText
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Year</mat-label>
+    <mat-select [formControl]="year" multiple>
+      <mat-option *ngFor="let year of yearData" [value]="year">{{
+        year[0].qText
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="apply()">
+    Apply Filters
+  </button>
+  <button mat-raised-button color="primary" (click)="clear()">
+    Clear Filters
+  </button>
+  <button mat-raised-button color="primary" (click)="clearByField('Region')">
+    Clear Region Filter
+  </button>
+</form>
+
+<br />
+Filters Example 2 - filter the filterpanes based on the selections made by the
+user:
+<br />
+<mat-form-field>
+  <mat-label>Quarter</mat-label>
+  <mat-select
+    [(ngModel)]="selectedQuarter"
+    multiple
+    (selectionChange)="onSelectionChange('Quarter', $event.value, false)"
+  >
+    <ng-container *ngFor="let quarter of quarterData">
+      <mat-option
+        [value]="quarter"
+        *ngIf="
+          quarter[0].qState === 'O' ||
+          quarter[0].qState === 'S' ||
+          quarter[0].qState === 'A'
+        "
+        >{{ quarter[0].qText }}</mat-option
+      >
+    </ng-container>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Month</mat-label>
+  <mat-select
+    [(ngModel)]="selectedMonth"
+    multiple
+    (selectionChange)="onSelectionChange('Month', $event.value, true)"
+  >
+    <ng-container *ngFor="let month of monthData">
+      <mat-option
+        [value]="month"
+        *ngIf="
+          month[0].qState === 'O' ||
+          month[0].qState === 'S' ||
+          month[0].qState === 'A'
+        "
+        >{{ month[0].qText }}</mat-option
+      >
+    </ng-container>
+  </mat-select>
+</mat-form-field>
+
+<br />
+Bookmarks:
+<br />
+<br />
+Create Bookmark:
+<input type="text" [(ngModel)]="bookmarkName" />
+<button (click)="saveBookmark()">Create Bookmark</button>
+<br />
+<br />
+<mat-form-field>
+  <mat-label>Bookmark</mat-label>
+  <mat-select [(ngModel)]="selectedBookmark">
+    <mat-option
+      *ngFor="let bookmark of bookmarksList"
+      [value]="bookmark.qInfo.qId"
+      >{{ bookmark.qInfo.qId }}</mat-option
+    >
+  </mat-select>
+</mat-form-field>
+<button (click)="applyBookmark()">Apply Bookmark</button>
+<button (click)="deleteBookmark()">Delete Bookmark</button>
+<br />
+
+Dates:
+<br />
+<mat-form-field>
+  <mat-label>Enter a start date range</mat-label>
+  <mat-date-range-input [rangePicker]="picker">
+    <input
+      matStartDate
+      matInput
+      [(ngModel)]="startDate1"
+      placeholder="Start date"
+    />
+    <input matEndDate matInput [(ngModel)]="endDate1" placeholder="End date" />
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+<br />
+<mat-form-field>
+  <mat-label>Enter an end date range</mat-label>
+  <mat-date-range-input [rangePicker]="picker2">
+    <input
+      matStartDate
+      matInput
+      [(ngModel)]="startDate2"
+      placeholder="End date"
+    />
+    <input
+      matEndDate
+      matInput
+      [(ngModel)]="endDate2"
+      placeholder="End date"
+      (dateChange)="onDateChange()"
+    />
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker2></mat-date-range-picker>
+</mat-form-field>
+
+<br />
+<br />
+Single Select Dates:
+<mat-form-field>
+  <mat-label>Enter a start date</mat-label>
+  <input matInput [(ngModel)]="startDate3" [matDatepicker]="picker3" />
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+  <mat-datepicker #picker3></mat-datepicker>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Enter a end date</mat-label>
+  <input
+    matInput
+    [(ngModel)]="endDate3"
+    [matDatepicker]="picker4"
+    (dateChange)="onSingleSelectDateChange()"
+  />
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
+  <mat-datepicker #picker4></mat-datepicker>
+</mat-form-field>
+<br />
+<br />
+Data:
+<br />
+Selected Year: {{ selectedYear }}
+<br />
+Selected Region: {{ selectedRegion }}
+<br />
+<br />
+<div class="table-container">
+  <div class="is-simple">
+    <span>Default Table</span>
+    <hr />
+    <button (click)="exportData(t01Rows)">Export to Excel</button>
+    <hr />
+    <mat-form-field>
+      <mat-label>Region</mat-label>
+      <mat-select
+        [(ngModel)]="regionDefaultFilter"
+        multiple
+        (selectionChange)="
+          onRegionDefaultChange(
+            'Region',
+            $event.value,
+            false,
+            alternateState.DEFAULT
+          )
+        "
+      >
+        <mat-option *ngFor="let region of regionData" [value]="region">{{
+          region[0].qText
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <hr />
+    <table role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th>Year</th>
+          <th>Region</th>
+          <th>Count Users</th>
+          <th>Duration Time</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <ng-container *ngFor="let row of t01Rows">
+          <tr>
+            <td>
+              <div (click)="selectValueByField('Year', row[0].qNum, true)">
+                {{ row[0].qText }}
+              </div>
+            </td>
+            <td>
+              <div (click)="selectValueByField('Region', row[1].qText, false)">
+                {{ row[1].qText }}
+              </div>
+            </td>
+            <td>{{ row[2].qText }}</td>
+            <td>{{ row[3].qText }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div class="is-simple">
+    <span> Table affected by the alternate state</span>
+    <hr />
+    <button (click)="exportData(t02Rows)">Export to Excel</button>
+    <hr />
+    <mat-form-field>
+      <mat-label>Region</mat-label>
+      <mat-select
+        [(ngModel)]="regionBdpFilter"
+        multiple
+        (selectionChange)="
+          onRegionBdpChange('Region', $event.value, false, alternateState.BDP)
+        "
+      >
+        <mat-option *ngFor="let region of regionData" [value]="region">{{
+          region[0].qText
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <hr />
+    <table role="table">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th>Year</th>
+          <th>Region</th>
+          <th>Count Users</th>
+          <th>Duration Time</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <ng-container *ngFor="let row of t02Rows">
+          <tr>
+            <td>
+              <div
+                (click)="
+                  selectValueByField(
+                    'Year',
+                    row[0].qNum,
+                    true,
+                    alternateState.BDP
+                  )
+                "
+              >
+                {{ row[0].qText }}
+              </div>
+            </td>
+            <td>
+              <div
+                (click)="
+                  selectValueByField(
+                    'Region',
+                    row[1].qText,
+                    false,
+                    alternateState.BDP
+                  )
+                "
+              >
+                {{ row[1].qText }}
+              </div>
+            </td>
+            <td>{{ row[2].qText }}</td>
+            <td>{{ row[3].qText }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

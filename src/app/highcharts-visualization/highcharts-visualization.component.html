@@ -1,0 +1,6 @@
+
+<div id="chartContainer">
+    <highcharts-chart #chart [Highcharts]="Highcharts" [options]="chartOptions" [(update)]="updateFlag"
+        (chartInstance)="saveInstance($event)">
+    </highcharts-chart>
+</div> 

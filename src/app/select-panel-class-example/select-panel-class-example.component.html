@@ -1,0 +1,39 @@
+<p>select-panel-class-example works!</p>
+<li *ngFor="let item of data">{{ item[0].qText }}</li>
+a<br />
+<br />
+
+<form>
+  <mat-form-field>
+    <mat-label><strong> Pick a Channel </strong> </mat-label>
+    <mat-select [(ngModel)]="selectedValue" name="item">
+      <mat-option *ngFor="let item of hyperCubeDataNew" [value]="item[0].qText">
+        {{ item[0].qText }}
+      </mat-option>
+    </mat-select>
+    <mat-error> Channel is <strong>required</strong> </mat-error>
+  </mat-form-field>
+  <p>Selected channel: {{ selectedValue }}</p>
+</form>
+
+<br />
+<br />
+<div>Total Sales: {{ totalSales }}</div>
+
+<br />
+<br />
+<div class="col">
+  <p>
+    You select your Channel <b>{{ selectedTeam }}</b>
+  </p>
+  <select #teams (change)="onSelected(teams.value)">
+    <option default>Pick a channel</option>
+    <option
+      *ngFor="let item of data"
+      [ngValue]="item"
+      ng-click="selectFieldValue(fieldName, value)"
+    >
+      {{ item[0].qText }}
+    </option>
+  </select>
+</div>

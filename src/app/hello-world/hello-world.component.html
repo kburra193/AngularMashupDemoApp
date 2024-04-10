@@ -1,0 +1,60 @@
+<!----
+<p>hello-world works!</p>
+<ul>
+  <li *ngFor="let item of data">{{ item[0].qText }}</li>
+</ul>
+<div>Total Sales: {{ totalSales }}</div>
+<button (click)="selectValue('Channel', 'Digital')">
+  Select Digital
+</button>
+ <mat-form-field>
+  <mat-label>Favorite food</mat-label>
+  <mat-select>
+    @for (food of data_temp; track food) {
+      <mat-option [value]="food.id">{{food.name}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+
+<p>select-panel-class-example works!</p>
+<li *ngFor="let item of data">{{ item[0].qText }}</li>
+
+<form>
+  <h4>mat-select</h4>
+  <mat-form-field>
+    <mat-label>Channel</mat-label>
+    <mat-select [(ngModel)]="selectedValue" name="item">
+      @for (item of listData2; track item) {
+      <mat-option [value]="item.qText">{{ item.qText }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <p>Selected channel: {{ selectedValue }}</p>
+</form>
+
+
+ <mat-form-field class="mat-type ">
+  <mat-label><strong> Channel </strong> </mat-label>
+  <mat-select [(ngModel)]="selectedValue" name="item">
+    <mat-option *ngFor="let item of listData2" [value]=item.qText>
+      {{item.qText}}
+    </mat-option>
+  </mat-select>
+      <mat-error >
+        Channel is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+
+
+<form #f="ngForm">
+  <label>Channel</label>
+  <select name="selectedCompetence" [(ngModel)]="selectedValue">
+    <option *ngFor="let item of data" [ngValue]="item">{{item[0].qText}}</option>
+  </select>
+
+  <br />
+  <p>Selected channel: {{ selectedValue }}</p>
+</form>
+-->

@@ -1,0 +1,10 @@
+.table-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.is-simple {
+    border: 1px solid black;
+    padding: 20px;
+}
