@@ -31,8 +31,8 @@ export class QlikService {
   // Define a private property to hold the host configuration for Qlik API
   private hostConfig: HostConfig = {
     authType: 'oauth2', // The type of authentication to use
-    host: '', // The host of the Qlik cloud tenant
-    clientId: '', // The client ID for OAuth2 authentication
+    host: 'karthikburra93.us.qlikcloud.com', // The host of the Qlik cloud tenant
+    clientId: '05e5bba37b784b38fb7b4b26364e5966', // The client ID for OAuth2 authentication
     redirectUri: 'https://localhost:4200/assets/oauth-redirect.html', // The redirect URI after successful authentication
     accessTokenStorage: 'session' // Where to store the access token
   };
@@ -41,7 +41,6 @@ export class QlikService {
   private currentApp: any;
   private openObjects: GenericObject[] = [];
   private currentAppSession: AppSession | null = null;
-
   // The constructor function is called when an instance of the QlikService is created
   constructor() {
     setDefaultHostConfig(this.hostConfig);
@@ -316,7 +315,24 @@ export class QlikService {
     await this.currentApp.destroyBookmark(bookmarkId);
   }
 
-  //clear by field
+  //get variable value
+  async getVariableContent(variableName) {
+    const genericVar = await this.currentApp.getVariableByName(variableName);
+    console.log(genericVar);
+    const content = await genericVar.getRawContent(); // https://qlik.dev/apis/json-rpc/qix/genericvariable/#%23%2Fentries%2FGenericVariable%2Fentries%2FGetRawContent
+    console.log(content);
+    return content;
+  }
+
+  // set variable properties
+  async setVariableContent(variableName, val) {
+    console.log(variableName, val);
+    const genericVar = await this.currentApp.getVariableByName(variableName);
+    await genericVar.setNumValue(val);
+    return val;
+  }
+
+   //clear by field
   public async clearSelectionsByField(fieldName:string): Promise<any> {
     const app = await this.currentApp.getField(fieldName);
     return await app.clear()
@@ -421,9 +437,6 @@ export class QlikService {
     this._selectionChangedSource.complete();
   }
 
-  //clearall created KB
-  public async clearAllSelections(fieldName:string): Promise<any> {
-    const app = await this.currentApp.getField(fieldName);
-    return await app.clearAll()
-  }
+
+
 }
