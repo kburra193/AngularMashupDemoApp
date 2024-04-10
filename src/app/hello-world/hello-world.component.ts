@@ -31,7 +31,7 @@ export class HelloWorldComponent implements OnInit {
       qlikService: this.qlikService,
     });
     await this.qlikService.setCurrentApp(
-      '20ea8a8d-9f46-4531-bba5-3f1ccf7d9658'
+      'ffd78510-ff1c-4cfc-a433-9f11b961259f'
     );
     try {
       this.data = await this.qlikService.getDataForObject('kWpJPP');

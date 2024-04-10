@@ -56,7 +56,7 @@ export class SelectPanelClassExampleComponent {
       qlikService: this.qlikService,
     });
     await this.qlikService.setCurrentApp(
-      '7561607d-e381-46b8-ae92-9a3194597aaf'
+      'ffd78510-ff1c-4cfc-a433-9f11b961259f'
     );
     try {
       this.data = await this.qlikService.getDataForObject('ALPTam');

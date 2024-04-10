@@ -31,10 +31,10 @@ export class QlikService {
   // Define a private property to hold the host configuration for Qlik API
   private hostConfig: HostConfig = {
     authType: 'oauth2', // The type of authentication to use
-    host: '', // The host of the Qlik cloud tenant
-    clientId: '', // The client ID for OAuth2 authentication
+    host: 'kassovitz.us.qlikcloud.com', // The host of the Qlik cloud tenant
+    clientId: '2e2c3a66c97818c67a21d21c1c27d788', // The client ID for OAuth2 authentication
     redirectUri: 'https://localhost:4200/assets/oauth-redirect.html', // The redirect URI after successful authentication
-    accessTokenStorage: 'session' // Where to store the access token
+    accessTokenStorage: 'session', // Where to store the access token
   };
 
   // Define a private property to hold the current Qlik app

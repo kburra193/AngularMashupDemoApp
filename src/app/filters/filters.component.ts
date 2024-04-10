@@ -77,6 +77,7 @@ export class FiltersComponent {
   endDate2: Date;
   startDate3: Date;
   endDate3: Date;
+  singleDate: Date;
   regionDefaultFilter: any[] | undefined = [];
   regionBdpFilter: any[] | undefined = [];
   alternateState = AlternateState;
@@ -91,7 +92,7 @@ export class FiltersComponent {
   async ngOnInit() {
     //Set App
     await this.qlikService.setCurrentApp(
-      '7561607d-e381-46b8-ae92-9a3194597aaf'
+      'ffd78510-ff1c-4cfc-a433-9f11b961259f'
     );
 
     //Clear all values
@@ -210,32 +211,35 @@ export class FiltersComponent {
     );
   }
 
-  async onDateChange(){
-    const start = moment(this.startDate1).format("YYYY-MM-DD");
-    const end = moment(this.endDate2).format("YYYY-MM-DD");
+  async onDateChange(from, to){
+    const start = moment(from).format("YYYY-MM-DD");
+    const end = moment(to).format("YYYY-MM-DD");
     //create the expression - the result from this expression gets the values that are between the selected dates
     const dateExpression = `=Concat({<[Bookings Date]={">${start} <${end}"}>} distinct [Bookings Date],',')`
     //evaluate expression to get the selected dates
     const expressionResult = await this.qlikService.evaluateExpression(dateExpression);
+    console.log('expressionResult', expressionResult);
     // collect the values to select
     const selectedValues = expressionResult.split(',').map(val => ({qText: val, qIsNumeric: true, qNumber: new QSDate(moment(val)).getIntegerValue() }));
+    console.log('selectedValues', selectedValues);
     //apply values
     await this.qlikService.selectMultipleValuesPerField('Bookings Date', selectedValues);
     //refresh data
     await this.refreshData();
   }
 
-  async onSingleSelectDateChange(){
-    const start = moment(this.startDate3).format("YYYY-MM-DD");
-    console.log('start',start);
-    const end = moment(this.endDate3).format("YYYY-MM-DD");
-    console.log('end',end);
+  async onSelectSingleDate(date){
+    const myDate = moment(date).format("YYYY-MM-DD");
+    console.log('myDate', myDate);
     //create the expression - the result from this expression gets the values that are between the selected dates
-    const dateExpression = `=Concat({<[Bookings Date]={">${start} <${end}"}>} distinct [Bookings Date],',')`
+    const dateExpression = `=Concat({<[Bookings Date]={"${myDate}"}>} distinct [Bookings Date],',')`
+    console.log('dateExpression', dateExpression);
     //evaluate expression to get the selected dates
     const expressionResult = await this.qlikService.evaluateExpression(dateExpression);
+    console.log('expressionResult', expressionResult);
     // collect the values to select
-    const selectedValues = expressionResult.split(',').map(val => ({qText: val, qIsNumeric: true, qNumber: new QSDate(moment(val)).getIntegerValue() }));
+    const selectedValues = [{qText: expressionResult, qIsNumeric: true, qNumber: new QSDate(moment(expressionResult)).getIntegerValue() }];
+    console.log('selectedValues', selectedValues);
     //apply values
     await this.qlikService.selectMultipleValuesPerField('Bookings Date', selectedValues);
     //refresh data

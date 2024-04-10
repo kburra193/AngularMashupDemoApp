@@ -129,7 +129,7 @@ Dates:
       matInput
       [(ngModel)]="endDate2"
       placeholder="End date"
-      (dateChange)="onDateChange()"
+      (dateChange)="onDateChange(startDate1, endDate2)"
     />
   </mat-date-range-input>
   <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
@@ -138,7 +138,7 @@ Dates:
 
 <br />
 <br />
-Single Select Dates:
+Select Date Range:
 <mat-form-field>
   <mat-label>Enter a start date</mat-label>
   <input matInput [(ngModel)]="startDate3" [matDatepicker]="picker3" />
@@ -152,12 +152,30 @@ Single Select Dates:
     matInput
     [(ngModel)]="endDate3"
     [matDatepicker]="picker4"
-    (dateChange)="onSingleSelectDateChange()"
+    (dateChange)="onDateChange(startDate3, endDate3)"
   />
   <mat-hint>MM/DD/YYYY</mat-hint>
   <mat-datepicker-toggle matIconSuffix [for]="picker4"></mat-datepicker-toggle>
   <mat-datepicker #picker4></mat-datepicker>
 </mat-form-field>
+
+<br />
+<br />
+
+Single Select:
+<mat-form-field>
+  <mat-label>Select Date</mat-label>
+  <input
+    matInput
+    [(ngModel)]="singleDate"
+    [matDatepicker]="picker5"
+    (dateChange)="onSelectSingleDate(singleDate)"
+  />
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker5"></mat-datepicker-toggle>
+  <mat-datepicker #picker5></mat-datepicker>
+</mat-form-field>
+
 <br />
 <br />
 Data:
